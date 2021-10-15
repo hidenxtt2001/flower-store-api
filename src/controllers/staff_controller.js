@@ -79,8 +79,6 @@ module.exports = {
   logout: async (req, res) => {
     try {
       const staff = req.staff;
-      staff.accessToken.pull({ token: req.token });
-      await staff.save();
       staff.refreshToken.pull({ token: req.body.tokenRefresh });
       await staff.save();
       const response = new ResponseHelper(false, "Logout success", null);

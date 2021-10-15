@@ -8,12 +8,13 @@ const authMiddleWare = require("../middleware/auth");
 // Login to staff account
 router.post("/login", controller.login);
 
+router.post("/logout", controller.logout);
+
 // Register new staff account
 router.post("/register", controller.register);
 
 router.use(authMiddleWare);
 
-router.post("/logout", controller.logout);
 // Get all staff
 router.get("/", permissionRole, controller.get_staff);
 
