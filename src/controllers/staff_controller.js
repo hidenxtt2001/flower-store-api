@@ -1,6 +1,7 @@
 const Staff = require("../models/staff");
 const Role = require("../models/role");
 const ResponseHelper = require("../utils/response_helper");
+
 module.exports = {
   get_staff: async (req, res) => {
     try {
@@ -20,15 +21,16 @@ module.exports = {
   },
   get_special_staff: async (req, res) => {
     try {
-      Staff.findById(req.params.id)
-        .then((doc) => {
-          const response = new ResponseHelper(false, "Get Special Staff", doc);
-          res.status(200).json(response);
-        })
-        .catch((e) => {
-          const response = new ResponseHelper(true, e.message, null);
-          res.status(403).json(response);
-        });
+      const staff = await Staff.findOne({ _id: req.params.id }).exec();
+      if (!staff) throw new Error("The Staff does not exist");
+      if (staff._id.toString() !== req.staff._id.toString())
+        throw new Error("Don't have permission");
+      const response = new ResponseHelper(
+        false,
+        "Get Special Staff",
+        staff.toJSON()
+      );
+      res.status(200).json(response);
     } catch (e) {
       const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
@@ -48,11 +50,9 @@ module.exports = {
         res.status(401).json(response);
         return;
       }
-      const accessToken = await staff.getNewAccessToken();
       const refreshToken = await staff.getNewRefreshToken();
       const response = new ResponseHelper(false, "Login Success", {
-        ...staff.toJSON(),
-        accessToken: accessToken,
+        staffId: staff._id,
         refreshToken: refreshToken,
       });
       res.status(201).send(response);
@@ -78,10 +78,25 @@ module.exports = {
   },
   logout: async (req, res) => {
     try {
-      const staff = req.staff;
-      staff.refreshToken.pull({ token: req.body.tokenRefresh });
+      const staff = await Staff.isRefreshTokenValid(req.body.refreshToken);
+      staff.refreshTokens.pull({ token: req.body.refreshToken });
       await staff.save();
       const response = new ResponseHelper(false, "Logout success", null);
+      res.status(201).send(response);
+    } catch (e) {
+      const response = new ResponseHelper(true, e.message, null);
+      res.status(403).json(response);
+    }
+  },
+  get_new_access_token: async (req, res) => {
+    try {
+      const staff = await Staff.isRefreshTokenValid(req.body.refreshToken);
+      const accessToken = await staff.getNewAccessToken();
+      const response = new ResponseHelper(
+        false,
+        "Get new access token success",
+        { accessToken: accessToken }
+      );
       res.status(201).send(response);
     } catch (e) {
       const response = new ResponseHelper(true, e.message, null);

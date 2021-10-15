@@ -1,6 +1,10 @@
 ### Get all staff
 GET http://localhost:3504/staff
 
+### Get special staff
+GET http://localhost:3504/staff/6168f26fd007c31d28b1c8a8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTE5OTksImV4cCI6MTYzNDMxMzc5OX0.QT1xH5sEHXR-XLPItEyybv3wFqhRDRf1_y6pEueJkSs 
+
 ### Login
 POST http://localhost:3504/staff/login
 content-type: application/json
@@ -14,9 +18,8 @@ content-type: application/json
 POST http://localhost:3504/staff/logout
 content-type: application/json
 
-
 {
-    "tokenRefesh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY1YjVkZjU4M2UzNzg2ZjUxODExZDEiLCJpYXQiOjE2MzQwNTc5ODcsImV4cCI6MTYzNDY2Mjc4N30.qsoGHjn65tFhbBPYbok-T-kZj3pmkDLQ9PVpHvDHPYs"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMDc5NDksImV4cCI6MTYzNDkxMjc0OX0.QVbllcd5YXliWA7JMjEBtUH8xxNEaY_W4hv4jReK2qk"
 }
 
 ### Register
@@ -30,6 +33,13 @@ content-type: application/json
     "role" : "61659bff2293535ee4fcaf21"
 }
 
+### get_new_access_token
+POST http://localhost:3504/staff/get_new_access_token
+content-type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTE4ODYsImV4cCI6MTYzNDkxNjY4Nn0.q6LBCDN1T2PxewPjXkoQ3M9NJuc9GFycC3S0iPKBjNU"
+}
 
 
 ### Add new role
