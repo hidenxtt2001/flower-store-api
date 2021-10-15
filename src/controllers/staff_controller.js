@@ -11,11 +11,11 @@ module.exports = {
           res.status(200).json(response);
         })
         .catch((e) => {
-          const response = new ResponseHelper(true, e.message, null);
+          const response = new ResponseHelper(true, e.message);
           res.status(403).json(response);
         });
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },
@@ -32,7 +32,7 @@ module.exports = {
       );
       res.status(200).json(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },
@@ -57,7 +57,7 @@ module.exports = {
       });
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },
@@ -72,19 +72,32 @@ module.exports = {
       );
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },
   logout: async (req, res) => {
     try {
       const staff = await Staff.isRefreshTokenValid(req.body.refreshToken);
-      staff.refreshTokens.pull({ token: req.body.refreshToken });
+      const result = await Staff.findOneAndUpdate(
+        {
+          _id: staff._id,
+          refreshTokens: {
+            $elemMatch: {
+              token: req.body.refreshToken,
+            },
+          },
+        },
+        {
+          $pull: { refreshTokens: { token: req.body.refreshToken } },
+        },
+        { safe: true, multi: true }
+      );
       await staff.save();
-      const response = new ResponseHelper(false, "Logout success", null);
+      const response = new ResponseHelper(false, "Logout success");
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },
@@ -99,7 +112,7 @@ module.exports = {
       );
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },

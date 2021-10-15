@@ -129,6 +129,15 @@ staffSchema.statics.isRefreshTokenValid = async function (refreshToken) {
     const data = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
     const staff = await Staff.findOne({ _id: data._id }).exec();
     if (!staff) throw new Error("The Staff does not exist");
+    const match = await Staff.find({
+      _id: staff._id,
+      refreshTokens: {
+        $elemMatch: {
+          token: refreshToken,
+        },
+      },
+    }).exec();
+    if (match.length === 0) throw new Error("Token is expire");
     return staff;
   } catch (e) {
     throw new Error(e.message);
