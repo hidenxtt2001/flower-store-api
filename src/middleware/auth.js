@@ -7,7 +7,7 @@ async function auth(req, res, next) {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const staff = await Staff.findOne({
       _id: decodedToken._id,
-      "tokenAuths.token": token,
+      "accessTokens.token": token,
     }).exec();
     if (!staff) {
       throw new Error("Invalid token");

@@ -48,12 +48,12 @@ module.exports = {
         res.status(401).json(response);
         return;
       }
-      const tokenAuth = await staff.getNewTokenAuth();
-      const tokenRefesh = await staff.getNewTokenRefesh();
+      const accessToken = await staff.getNewAccessToken();
+      const refreshToken = await staff.getNewRefreshToken();
       const response = new ResponseHelper(false, "Login Success", {
         ...staff.toJSON(),
-        tokenAuth: tokenAuth,
-        tokenRefesh: tokenRefesh,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
       });
       res.status(201).send(response);
     } catch (e) {
@@ -79,9 +79,9 @@ module.exports = {
   logout: async (req, res) => {
     try {
       const staff = req.staff;
-      staff.tokenAuths.pull({ token: req.token });
+      staff.accessToken.pull({ token: req.token });
       await staff.save();
-      staff.tokenRefeshs.pull({ token: req.body.tokenRefesh });
+      staff.refreshToken.pull({ token: req.body.tokenRefresh });
       await staff.save();
       const response = new ResponseHelper(false, "Logout success", null);
       res.status(201).send(response);
