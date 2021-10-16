@@ -3,7 +3,12 @@ GET http://localhost:3504/staff
 
 ### Get special staff
 GET http://localhost:3504/staff/6168f26fd007c31d28b1c8a8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTYxOTksImV4cCI6MTYzNDMxNzk5OX0.cjnO_PdH49TyAvVqBJV6G4WXxqF64rCaCnzh2pOStsU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzNTE5NjYsImV4cCI6MTYzNDM1Mzc2Nn0.MRbTVCHuYv0SxTriuzQPXajcxGpY8mKY7ZGWHoa03BE
+
+
+### Get profile current staff
+GET http://localhost:3504/staff/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzNTE5NjYsImV4cCI6MTYzNDM1Mzc2Nn0.MRbTVCHuYv0SxTriuzQPXajcxGpY8mKY7ZGWHoa03BE
 
 ### Login
 POST http://localhost:3504/staff/login
@@ -19,7 +24,7 @@ POST http://localhost:3504/staff/logout
 content-type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTYxODQsImV4cCI6MTYzNDkyMDk4NH0.YHBdByhG-Dk3Zaf_2k-rgmGF6kt7uGB-Sm8vdcRunJM"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzNTE5NDgsImV4cCI6MTYzNDk1Njc0OH0.a5SvBSGub3Gsrbt2_jgQ7shxT6EgiLFlank3P5Alk_w"
 }
 
 ### Register
@@ -38,7 +43,7 @@ POST http://localhost:3504/staff/token
 content-type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTYxODQsImV4cCI6MTYzNDkyMDk4NH0.YHBdByhG-Dk3Zaf_2k-rgmGF6kt7uGB-Sm8vdcRunJM"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzNTE5NDgsImV4cCI6MTYzNDk1Njc0OH0.a5SvBSGub3Gsrbt2_jgQ7shxT6EgiLFlank3P5Alk_w"
 }
 
 

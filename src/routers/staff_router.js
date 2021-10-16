@@ -18,13 +18,13 @@ router.post("/register", controller.register);
 
 router.use(authMiddleWare);
 
+// Load current profile
+router.get("/profile", controller.profile);
+
 // Get all staff
 router.get("/", permissionRole, controller.get_staff);
 
 //Get special staff by id
 router.get("/:id", permissionRole, controller.get_special_staff);
-
-// Load current profile
-router.get("/profile", controller.profile);
 
 module.exports = router;

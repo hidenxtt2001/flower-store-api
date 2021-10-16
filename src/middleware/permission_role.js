@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Staff = require("../models/staff");
+const Role = require("../models/role");
 const ResponseHelper = require("../utils/response_helper");
 
 async function permission_role(req, res, next) {

@@ -66,7 +66,6 @@ module.exports = {
       }
       const refreshToken = await staff.getNewRefreshToken();
       const response = new ResponseHelper(false, "Login Success", {
-        staffId: staff._id,
         refreshToken: refreshToken,
       });
       res.status(201).send(response);
