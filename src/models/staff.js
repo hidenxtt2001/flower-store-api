@@ -39,6 +39,11 @@ const staffSchema = mongoose.Schema({
       });
     },
   },
+  url: {
+    type: String,
+    require: false,
+    default: "",
+  },
   accessTokens: [
     {
       token: {
