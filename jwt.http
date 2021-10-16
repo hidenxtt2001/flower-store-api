@@ -3,7 +3,7 @@ GET http://localhost:3504/staff
 
 ### Get special staff
 GET http://localhost:3504/staff/6168f26fd007c31d28b1c8a8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTE5OTksImV4cCI6MTYzNDMxMzc5OX0.QT1xH5sEHXR-XLPItEyybv3wFqhRDRf1_y6pEueJkSs 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTYxOTksImV4cCI6MTYzNDMxNzk5OX0.cjnO_PdH49TyAvVqBJV6G4WXxqF64rCaCnzh2pOStsU
 
 ### Login
 POST http://localhost:3504/staff/login
@@ -19,7 +19,7 @@ POST http://localhost:3504/staff/logout
 content-type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMDc5NDksImV4cCI6MTYzNDkxMjc0OX0.QVbllcd5YXliWA7JMjEBtUH8xxNEaY_W4hv4jReK2qk"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTYxODQsImV4cCI6MTYzNDkyMDk4NH0.YHBdByhG-Dk3Zaf_2k-rgmGF6kt7uGB-Sm8vdcRunJM"
 }
 
 ### Register
@@ -34,11 +34,11 @@ content-type: application/json
 }
 
 ### get_new_access_token
-POST http://localhost:3504/staff/get_new_access_token
+POST http://localhost:3504/staff/token
 content-type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTE4ODYsImV4cCI6MTYzNDkxNjY4Nn0.q6LBCDN1T2PxewPjXkoQ3M9NJuc9GFycC3S0iPKBjNU"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzMTYxODQsImV4cCI6MTYzNDkyMDk4NH0.YHBdByhG-Dk3Zaf_2k-rgmGF6kt7uGB-Sm8vdcRunJM"
 }
 
 

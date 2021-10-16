@@ -36,6 +36,20 @@ module.exports = {
       res.status(403).json(response);
     }
   },
+  profile: async (req, res) => {
+    try {
+      const staff = req.staff;
+      const response = new ResponseHelper(
+        false,
+        "Get Info Profile",
+        staff.toJSON()
+      );
+      res.status(200).json(response);
+    } catch (e) {
+      const response = new ResponseHelper(true, e.message);
+      res.status(403).json(response);
+    }
+  },
   login: async (req, res) => {
     try {
       const staff = await Staff.findByCredentials(
