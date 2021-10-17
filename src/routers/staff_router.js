@@ -11,12 +11,15 @@ router.post("/login", controller.login);
 router.post("/logout", controller.logout);
 
 // Get new access token
-router.post("/token", controller.get_new_access_token);
+router.post("/refresh-acess-token", controller.get_new_access_token);
 
 // Register new staff account
 router.post("/register", controller.register);
 
 router.use(authMiddleWare);
+
+// Check valid access token
+router.get("/valid-access-token", controller.valid_access_token);
 
 // Load current profile
 router.get("/profile", controller.profile);

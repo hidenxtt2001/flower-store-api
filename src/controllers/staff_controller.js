@@ -129,4 +129,13 @@ module.exports = {
       res.status(403).json(response);
     }
   },
+  valid_access_token: async (req, res) => {
+    try {
+      const response = new ResponseHelper(false, "Access Token is valid");
+      res.status(200).send(response);
+    } catch (e) {
+      const response = new ResponseHelper(true, e.message);
+      res.status(403).json(response);
+    }
+  },
 };
