@@ -8,7 +8,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2Z
 
 ### Get profile current staff
 GET http://localhost:3504/staff/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzNTE5NjYsImV4cCI6MTYzNDM1Mzc2Nn0.MRbTVCHuYv0SxTriuzQPXajcxGpY8mKY7ZGWHoa03BE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQ3OTk4MjUsImV4cCI6MTYzNDgwMTYyNX0.1Zhb9m72CNHa35r6i8EvngowOJxCfDkGj-6T4U8PyFg
 
 ### Login
 POST http://localhost:3504/staff/login
@@ -39,11 +39,11 @@ content-type: application/json
 }
 
 ### get_new_access_token
-POST http://localhost:3504/staff/token
+POST http://localhost:3504/staff/refresh-acess-token
 content-type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQzNTE5NDgsImV4cCI6MTYzNDk1Njc0OH0.a5SvBSGub3Gsrbt2_jgQ7shxT6EgiLFlank3P5Alk_w"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQ3OTk3NDYsImV4cCI6MTYzNTQwNDU0Nn0.9NjBN-g_2IWTih_aYiUWRaAxFNxCuIduUAt6-kkAeDM"
 }
 
 
