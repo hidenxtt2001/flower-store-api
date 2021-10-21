@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Role = require("./role");
 
 const staffSchema = mongoose.Schema({
   name: {
@@ -26,7 +27,7 @@ const staffSchema = mongoose.Schema({
     },
   },
   role: {
-    type: String,
+    type: Number,
     required: true,
   },
   password: {

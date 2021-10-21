@@ -9,6 +9,13 @@ const roleSchema = mongoose.Schema({
     dropDups: true,
     trim: true,
   },
+  type: {
+    type: Number,
+    unique: true,
+    require: true,
+    dropDups: true,
+    trim: true,
+  },
   color: {
     type: String,
     required: true,
