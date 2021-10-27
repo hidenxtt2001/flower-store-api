@@ -11,11 +11,11 @@ module.exports = {
           res.status(200).json(response);
         })
         .catch((e) => {
-          const response = new ResponseHelper(true, e.message);
+          const response = new ResponseHelper(true, e.message, null);
           res.status(403).json(response);
         });
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -32,7 +32,7 @@ module.exports = {
       );
       res.status(200).json(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -46,7 +46,7 @@ module.exports = {
       );
       res.status(200).json(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -70,7 +70,7 @@ module.exports = {
       });
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -85,7 +85,7 @@ module.exports = {
       );
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -110,7 +110,7 @@ module.exports = {
       const response = new ResponseHelper(false, "Logout success");
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -125,7 +125,7 @@ module.exports = {
       );
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
@@ -134,7 +134,7 @@ module.exports = {
       const response = new ResponseHelper(false, "Access Token is valid");
       res.status(200).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message);
+      const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);
     }
   },
