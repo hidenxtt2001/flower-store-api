@@ -38,14 +38,6 @@ content-type: application/json
     "role" : "61659bff2293535ee4fcaf21"
 }
 
-### get_new_access_token
-POST http://localhost:3504/staff/refresh-acess-token
-content-type: application/json
-
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY4ZjI2ZmQwMDdjMzFkMjhiMWM4YTgiLCJpYXQiOjE2MzQ3OTk3NDYsImV4cCI6MTYzNTQwNDU0Nn0.9NjBN-g_2IWTih_aYiUWRaAxFNxCuIduUAt6-kkAeDM"
-}
-
 
 ### Add new role
 POST  http://localhost:3504/role
@@ -56,20 +48,6 @@ content-type: application/json
     "color":"F56F6F"
 }
 
-# {
-#     "name":"Seller",
-#     "color":"F5EF55"
-# }
-
-# {
-#     "name":"Accountant",
-#     "color":"55F565"
-# }
-
-# {
-#     "name":"Warehouse",
-#     "color":"4B92FD"
-# }
 
 ### Get all role
 GET http://localhost:3504/role

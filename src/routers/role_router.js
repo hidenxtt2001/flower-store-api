@@ -5,6 +5,7 @@ const permissionRole = require("../middleware/permission_role");
 const authMiddleWare = require("../middleware/auth");
 const router = express.Router();
 
+
 router.get("/", roleController.get_role);
 
 router.use(authMiddleWare);

@@ -64,9 +64,9 @@ module.exports = {
         res.status(401).json(response);
         return;
       }
-      const refreshToken = await staff.getNewRefreshToken();
+      const refreshToken = await staff.getNewAccessToken();
       const response = new ResponseHelper(false, "Login Success", {
-        refreshToken: refreshToken,
+        accessToken: refreshToken,
       });
       res.status(201).send(response);
     } catch (e) {
@@ -91,48 +91,22 @@ module.exports = {
   },
   logout: async (req, res) => {
     try {
-      const staff = await Staff.isRefreshTokenValid(req.body.refreshToken);
       const result = await Staff.findOneAndUpdate(
         {
-          _id: staff._id,
-          refreshTokens: {
+          accessToken: {
             $elemMatch: {
-              token: req.body.refreshToken,
+              token: req.body.accessToken,
             },
           },
         },
         {
-          $pull: { refreshTokens: { token: req.body.refreshToken } },
+          $pull: { accessToken: { token: req.body.accessToken } },
         },
         { safe: true, multi: true }
       );
-      await staff.save();
+      await result.save();
       const response = new ResponseHelper(false, "Logout success");
       res.status(201).send(response);
-    } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
-    }
-  },
-  get_new_access_token: async (req, res) => {
-    try {
-      const staff = await Staff.isRefreshTokenValid(req.body.refreshToken);
-      const accessToken = await staff.getNewAccessToken();
-      const response = new ResponseHelper(
-        false,
-        "Get new access token success",
-        { accessToken: accessToken }
-      );
-      res.status(201).send(response);
-    } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
-    }
-  },
-  valid_access_token: async (req, res) => {
-    try {
-      const response = new ResponseHelper(false, "Access Token is valid");
-      res.status(200).send(response);
     } catch (e) {
       const response = new ResponseHelper(true, e.message, null);
       res.status(403).json(response);

@@ -30,17 +30,22 @@ module.exports = {
   update_role: async (req, res) => {
     try {
       const response = new ResponseHelper();
-      Role.findById(req.params.id)
-        .then((data) => {
-          response.message = "Update role success";
-          response.data = data;
-          res.status(201);
-        })
-        .catch((e) => {
-          res.status(500);
-          response.error = true;
-          response.message = "Update role failed";
-        });
+      await Role.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { upsert: true },
+        function (err, doc) {
+          if (err) {
+            res.status(500);
+            response.error = true;
+            response.message = "Update role failed";
+          } else {
+            response.message = "Update role success";
+            response.data = data;
+            res.status(201);
+          }
+        }
+      );
       res.json(response);
     } catch (e) {
       const response = new ResponseHelper(true, e.message, null);

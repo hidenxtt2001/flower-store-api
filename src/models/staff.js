@@ -53,14 +53,6 @@ const staffSchema = mongoose.Schema({
       },
     },
   ],
-  refreshTokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
 });
 
 /**
@@ -72,7 +64,6 @@ staffSchema.methods.toJSON = function () {
   const staffObject = this.toObject();
   delete staffObject.pincode;
   delete staffObject.accessTokens;
-  delete staffObject.refreshTokens;
   delete staffObject.password;
   return staffObject;
 };
@@ -110,44 +101,6 @@ staffSchema.methods.getNewAccessToken = async function () {
   staff.accessTokens.push({ token: newToken });
   await staff.save();
   return newToken;
-};
-
-/**
- * Generate new token refresh for staff
- *  @returns {String} token - the token auth
- */
-staffSchema.methods.getNewRefreshToken = async function () {
-  const staff = this;
-  const newToken = jwt.sign(
-    { _id: staff._id.toString() },
-    process.env.JWT_SECRET_KEY,
-    {
-      expiresIn: "7d",
-    }
-  );
-  staff.refreshTokens.push({ token: newToken });
-  await staff.save();
-  return newToken;
-};
-
-staffSchema.statics.isRefreshTokenValid = async function (refreshToken) {
-  try {
-    const data = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
-    const staff = await Staff.findOne({ _id: data._id }).exec();
-    if (!staff) throw new Error("The Staff does not exist");
-    const match = await Staff.find({
-      _id: staff._id,
-      refreshTokens: {
-        $elemMatch: {
-          token: refreshToken,
-        },
-      },
-    }).exec();
-    if (match.length === 0) throw new Error("Token is expire");
-    return staff;
-  } catch (e) {
-    throw new Error(e.message);
-  }
 };
 
 /**
