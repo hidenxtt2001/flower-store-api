@@ -95,7 +95,7 @@ staffSchema.methods.getNewAccessToken = async function () {
     { _id: staff._id.toString() },
     process.env.JWT_SECRET_KEY,
     {
-      expiresIn: "30m",
+      expiresIn: "7d",
     }
   );
   staff.accessTokens.push({ token: newToken });

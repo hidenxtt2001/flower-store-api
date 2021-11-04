@@ -64,9 +64,9 @@ module.exports = {
         res.status(401).json(response);
         return;
       }
-      const refreshToken = await staff.getNewAccessToken();
+      const accessToken = await staff.getNewAccessToken();
       const response = new ResponseHelper(false, "Login Success", {
-        accessToken: refreshToken,
+        accessToken: accessToken,
       });
       res.status(201).send(response);
     } catch (e) {
