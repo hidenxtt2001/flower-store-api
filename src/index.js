@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 app.get("/", function (req, res) {
   res.send("Active");
 });
-
+app.use("/uploads", express.static("uploads"));
 app.use("/staff", require("./routers/staff_router"));
 app.use("/role", require("./routers/role_router"));
 app.use("/product", require("./routers/product_router"));

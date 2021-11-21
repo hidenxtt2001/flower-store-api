@@ -12,19 +12,16 @@ function permission_role(role) {
   return async (req, res, next) => {
     try {
       const staff = req.staff;
-      if (
-        role.find((x) => x === staff.role) &&
+
+      const check =
+        role.find((x) => x === staff.role) !== null &&
         (await Role.findOne({
           type: staff.role,
-        }).exec())
-      ) {
+        }).exec()) !== null;
+      if (!!check) {
         next();
       } else {
-        const response = new ResponseHelper(
-          true,
-          "You dont have permission",
-          null
-        );
+        const response = new ResponseHelper(true, "You dont have permission");
         res.status(403).json(response);
       }
     } catch (e) {

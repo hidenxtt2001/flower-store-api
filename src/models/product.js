@@ -10,9 +10,6 @@ const productSchema = mongoose.Schema({
     type: String,
     required: false,
     trim: true,
-    validate(value) {
-      return validator.isURL(value);
-    },
   },
   description: {
     type: String,
