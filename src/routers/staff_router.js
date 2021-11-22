@@ -24,4 +24,7 @@ router.get("/", permissionRole([3]), controller.get_staff);
 //Get special staff by id
 router.get("/:id", permissionRole([3]), controller.get_special_staff);
 
+// Update staff info
+router.patch('/:id',permissionRole([3]),controller.update_staff);
+
 module.exports = router;

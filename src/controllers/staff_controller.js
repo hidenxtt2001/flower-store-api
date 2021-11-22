@@ -1,30 +1,26 @@
 const Staff = require("../models/staff");
 const Role = require("../models/role");
 const ResponseHelper = require("../utils/response_helper");
+const { mongoose } = require("mongoose");
 
 module.exports = {
   get_staff: async (req, res) => {
     try {
-      Staff.find()
-        .then((doc) => {
-          const response = new ResponseHelper(false, "Get All Staff", doc);
-          res.status(200).json(response);
-        })
-        .catch((e) => {
-          const response = new ResponseHelper(true, e.message, null);
-          res.status(403).json(response);
-        });
+      const staff = await Staff.find();
+      const response = new ResponseHelper(false, "Get All Staff", staff);
+      res.status(200).json(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
     }
   },
   get_special_staff: async (req, res) => {
     try {
       const staff = await Staff.findOne({ _id: req.params.id }).exec();
-      if (!staff) throw new Error("The Staff does not exist");
+      if (!staff)
+        res.status(404).json(new ResponseHelper(true, "Don't exist user"));
       if (staff._id.toString() !== req.staff._id.toString())
-        throw new Error("Don't have permission");
+        res.status(403).json(new ResponseHelper(true, "Don't have permission"));
       const response = new ResponseHelper(
         false,
         "Get Special Staff",
@@ -32,8 +28,26 @@ module.exports = {
       );
       res.status(200).json(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
+    }
+  },
+  update_staff: async (req, res) => {
+    const { id } = req.params;
+    const match = req.body;
+
+    if (!mongoose.Schema.Types.ObjectId.isValid(id)) {
+      const response = new ResponseHelper(true, "Id not valid");
+      res.status(404).json(response);
+    }
+    try {
+      console.log(await Role.findOne({ type: role }));
+      await Staff.findByIdAndUpdate(id, match).exec();
+      const response = new ResponseHelper(false, "Update staff success");
+      res.status(201).json(response);
+    } catch (error) {
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
     }
   },
   profile: async (req, res) => {
@@ -46,8 +60,8 @@ module.exports = {
       );
       res.status(200).json(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
     }
   },
   login: async (req, res) => {
@@ -70,7 +84,7 @@ module.exports = {
       });
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
+      const response = new ResponseHelper(true, e.message);
       res.status(403).json(response);
     }
   },
@@ -85,8 +99,8 @@ module.exports = {
       );
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
     }
   },
   logout: async (req, res) => {
@@ -108,8 +122,8 @@ module.exports = {
       const response = new ResponseHelper(false, "Logout success");
       res.status(201).send(response);
     } catch (e) {
-      const response = new ResponseHelper(true, e.message, null);
-      res.status(403).json(response);
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
     }
   },
 };
