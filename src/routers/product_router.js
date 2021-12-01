@@ -17,12 +17,14 @@ router.post(
 );
 
 router.get("/:id", permissionRole([0, 2]), controller.get_special_product);
+router.delete("/:id", permissionRole([0]), controller.delete_product);
+
 router.patch(
   "/:id",
   upload.single("image"),
   permissionRole([0]),
   controller.update_product
 );
-router.delete("/:id", permissionRole([0]), controller.delete_product);
+
 
 module.exports = router;

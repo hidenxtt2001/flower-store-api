@@ -44,10 +44,9 @@ module.exports = {
   delete_product: async (req, res) => {
     const { id } = req.params;
     try {
-      const product = await Product.findOneAndRemove({ _id: id }).exec();
-      const result = await product.save();
+      await Product.findByIdAndRemove(id);
       const response = new ResponseHelper(false, "Delete Product Success");
-      res.status(200).json(response);
+      res.status(201).json(response);
     } catch (e) {
       const response = new ResponseHelper(true, e.message);
       res.status(404).json(response);
@@ -57,7 +56,7 @@ module.exports = {
   update_product: async (req, res) => {
     const { id } = req.params;
     const match = req.body;
-    if (!!!req.file) delete match.image;
+    if (!!req.file) match.image = req.file.path;
     try {
       const product = await Product.findByIdAndUpdate(id, match, {
         upsert: true,
