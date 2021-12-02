@@ -35,7 +35,7 @@ module.exports = {
       });
       const result = await product.save();
       const response = new ResponseHelper(false, "Add Product Success", result);
-      res.status(200).json(response);
+      res.status(201).json(response);
     } catch (e) {
       const response = new ResponseHelper(true, e.message);
       res.status(400).json(response);
