@@ -14,10 +14,10 @@ function permission_role(role) {
       const staff = req.staff;
 
       const check =
-        role.find((x) => x === staff.role) !== null &&
+        role.find((x) => x === staff.role) !== undefined &&
         (await Role.findOne({
           type: staff.role,
-        }).exec()) !== null;
+        }).exec()) !== undefined;
       if (!!check) {
         next();
       } else {

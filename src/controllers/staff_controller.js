@@ -2,9 +2,10 @@ const Staff = require("../models/staff");
 const Role = require("../models/role");
 const ResponseHelper = require("../utils/response_helper");
 const { mongoose } = require("mongoose");
-
+const sharp = require("sharp");
+const Constant = require("../utils/constant");
 module.exports = {
-  get_staff: async (req, res) => {
+  get_staffs: async (req, res) => {
     try {
       const staff = await Staff.find();
       const response = new ResponseHelper(false, "Get All Staff", staff);
@@ -89,8 +90,22 @@ module.exports = {
     }
   },
   register: async (req, res) => {
+    const { name, phone, email, role, password } = req.body;
+    let image = "";
     try {
-      const staff = new Staff(req.body);
+      if (req.file) {
+        const buffer = await sharp(req.file.buffer).png().toBuffer();
+        const image = await new Image({ data: buffer }).save();
+        image = `${Constant.imageDirection}/${image._id}`;
+      }
+      const staff = new Staff({
+        name: name,
+        phone: phone,
+        email: email,
+        role: role,
+        password: password,
+        url: image,
+      });
       const result = await staff.save();
       const response = new ResponseHelper(
         false,

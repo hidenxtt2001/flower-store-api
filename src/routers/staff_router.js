@@ -4,7 +4,8 @@ const router = express.Router();
 const controller = require("../controllers/staff_controller");
 const permissionRole = require("../middleware/permission_role");
 const authMiddleWare = require("../middleware/auth");
-const { RoleEnum } = require('../utils/enums');
+const { RoleEnum } = require("../utils/enums");
+const upload = require("../middleware/upload");
 
 // Login to staff account
 router.post("/login", controller.login);
@@ -20,11 +21,12 @@ router.get("/profile", controller.profile);
 router.post(
   "/register",
   permissionRole([RoleEnum.Manager]),
+  upload.single("image"),
   controller.register
 );
 
 // Get all staff
-router.get("/", permissionRole([RoleEnum.Manager]), controller.get_staff);
+router.get("/", permissionRole([RoleEnum.Manager]), controller.get_staffs);
 
 //Get special staff by id
 router.get(

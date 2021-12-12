@@ -6,6 +6,7 @@ const controller = require("../controllers/product_controller");
 const authentication = require("../middleware/auth");
 const permissionRole = require("../middleware/permission_role");
 const { RoleEnum } = require("../utils/enums");
+
 router.use(authentication);
 
 router.get(

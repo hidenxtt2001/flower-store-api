@@ -1,7 +1,9 @@
 const { mongoose } = require("mongoose");
 const Product = require("../models/product");
 const ResponseHelper = require("../utils/response_helper");
-
+const Constant = require("../utils/constant");
+const sharp = require("sharp");
+const Image = require("../models/image");
 module.exports = {
   get_products: async (req, res) => {
     try {
@@ -25,13 +27,18 @@ module.exports = {
   },
   add_product: async (req, res) => {
     const { name, description, basePrice } = req.body;
-    const image = !!req.file ? req.file.path : "";
+    let url = "";
     try {
+      if (req.file) {
+        const buffer = await sharp(req.file.buffer).png().toBuffer();
+        const image = await new Image({ data: buffer }).save();
+        url = `${Constant.imageDirection}/${image._id}`;
+      }
       const product = new Product({
         name: name,
         description: description,
         basePrice: basePrice,
-        image: image,
+        image: url,
       });
       const result = await product.save();
       const response = new ResponseHelper(false, "Add Product Success", result);

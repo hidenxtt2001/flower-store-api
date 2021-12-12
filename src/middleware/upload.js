@@ -5,15 +5,17 @@ const MIME_TYPE_MAP = {
   "image/jpeg": "jpg",
   "image/jpg": "jpg",
 };
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
+
+const upload = multer({
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, cb) {
     const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error(`Invalid mime type`);
+    let error = new Error(`Invalid file type`);
     if (isValid) error = null;
-    callback(error, "./uploads/");
+    cb(error, true);
   },
 });
-
-const upload = multer({ storage: storage });
 
 module.exports = upload;
