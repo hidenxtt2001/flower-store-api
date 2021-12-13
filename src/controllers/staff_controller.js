@@ -4,6 +4,7 @@ const ResponseHelper = require("../utils/response_helper");
 const { mongoose } = require("mongoose");
 const sharp = require("sharp");
 const Constant = require("../utils/constant");
+const Image = require("../models/image");
 module.exports = {
   get_staffs: async (req, res) => {
     try {
