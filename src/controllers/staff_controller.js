@@ -164,4 +164,19 @@ module.exports = {
       res.status(400).json(response);
     }
   },
+  deleteStaff: async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      const response = new ResponseHelper(true, "Id not valid");
+      return res.status(404).json(response);
+    }
+    try {
+      await Staff.findByIdAndRemove(id);
+      const response = new ResponseHelper(false, "Delete Staff Success");
+      res.status(201).send(response);
+    } catch (e) {
+      const response = new ResponseHelper(true, e.message);
+      res.status(400).json(response);
+    }
+  },
 };

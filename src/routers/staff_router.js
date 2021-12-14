@@ -43,4 +43,10 @@ router.patch(
   controller.update_staff
 );
 
+router.delete(
+  "/:id",
+  permissionRole([RoleEnum.Manager]),
+  controller.deleteStaff
+);
+
 module.exports = router;
