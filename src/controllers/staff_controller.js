@@ -1,7 +1,7 @@
 const Staff = require("../models/staff");
 const Role = require("../models/role");
 const ResponseHelper = require("../utils/response_helper");
-const { mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const sharp = require("sharp");
 const Constant = require("../utils/constant");
 const Image = require("../models/image");
@@ -36,16 +36,38 @@ module.exports = {
   },
   update_staff: async (req, res) => {
     const { id } = req.params;
-    const match = req.body;
-
-    if (!mongoose.Schema.Types.ObjectId.isValid(id)) {
+    const { name, phone, email, role } = req.body;
+    let imagePath = undefined;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       const response = new ResponseHelper(true, "Id not valid");
-      res.status(404).json(response);
+      return res.status(404).json(response);
     }
     try {
-      console.log(await Role.findOne({ type: role }));
-      await Staff.findByIdAndUpdate(id, match).exec();
-      const response = new ResponseHelper(false, "Update staff success");
+      if (req.file) {
+        const buffer = await sharp(req.file.buffer).png().toBuffer();
+        const image = await new Image({ data: buffer }).save();
+        imagePath = `${Constant.imageDirection}/${image._id}`;
+      }
+      if (role && !(await Role.findOne({ type: role })))
+        return res
+          .status(404)
+          .json(new ResponseHelper(false, "Role is not identify"));
+      let match = {
+        name: name,
+        phone: phone,
+        email: email,
+        role: role,
+        url: imagePath,
+      };
+      Object.keys(match).forEach((key) =>
+        match[key] === undefined ? delete match[key] : {}
+      );
+      const result = await Staff.findByIdAndUpdate(id, match);
+      const response = new ResponseHelper(
+        false,
+        "Update staff success",
+        result
+      );
       res.status(201).json(response);
     } catch (error) {
       const response = new ResponseHelper(true, e.message);
@@ -92,12 +114,12 @@ module.exports = {
   },
   register: async (req, res) => {
     const { name, phone, email, role, password } = req.body;
-    let image = "";
+    let imagePath = "";
     try {
       if (req.file) {
         const buffer = await sharp(req.file.buffer).png().toBuffer();
         const image = await new Image({ data: buffer }).save();
-        image = `${Constant.imageDirection}/${image._id}`;
+        imagePath = `${Constant.imageDirection}/${image._id}`;
       }
       const staff = new Staff({
         name: name,
@@ -105,7 +127,7 @@ module.exports = {
         email: email,
         role: role,
         password: password,
-        url: image,
+        url: imagePath,
       });
       const result = await staff.save();
       const response = new ResponseHelper(

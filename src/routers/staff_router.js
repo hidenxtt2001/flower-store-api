@@ -39,6 +39,7 @@ router.get(
 router.patch(
   "/:id",
   permissionRole([RoleEnum.Manager]),
+  upload.single("image"),
   controller.update_staff
 );
 
