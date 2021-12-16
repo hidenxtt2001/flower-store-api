@@ -20,6 +20,7 @@ app.use("/staff", require("./routers/staff_router"));
 app.use("/role", require("./routers/role_router"));
 app.use("/product", require("./routers/product_router"));
 app.use("/image", require("./routers/image_router"));
+app.use("/bill", require("./routers/bill_router"));
 
 //SERVER
 app.listen(port, function () {
