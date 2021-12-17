@@ -6,7 +6,7 @@ module.exports = {
     try {
       const bills = await Bill.find().populate({
         path: "staff",
-        select: ["name"],
+        select: ["name", "url"],
       });
       res
         .status(200)

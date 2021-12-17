@@ -6,4 +6,10 @@ const RoleEnum = {
   Warehouse: 0,
 };
 
-module.exports = { RoleEnum };
+const RequestStatus = {
+  Pending: 1,
+  Done: 2,
+  Cancel: 3,
+};
+
+module.exports = { RoleEnum, RequestStatus };
