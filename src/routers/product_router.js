@@ -11,32 +11,32 @@ router.use(authentication);
 
 router.get(
   "/",
-  permissionRole([RoleEnum.Warehouse, RoleEnum.Seller]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Seller, RoleEnum.Supplier]),
   controller.get_products
 );
 
 router.post(
   "/",
-  permissionRole([RoleEnum.Warehouse]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier]),
   upload.single("image"),
   controller.add_product
 );
 
 router.get(
   "/:id",
-  permissionRole([RoleEnum.Warehouse, RoleEnum.Seller]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Seller, RoleEnum.Supplier]),
   controller.get_special_product
 );
 router.delete(
   "/:id",
-  permissionRole([RoleEnum.Warehouse]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier]),
   controller.delete_product
 );
 
 router.patch(
   "/:id",
   upload.single("image"),
-  permissionRole([RoleEnum.Warehouse]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier]),
   controller.update_product
 );
 
