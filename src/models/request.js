@@ -28,6 +28,10 @@ const requestSchema = mongoose.Schema({
       required: true,
     },
   ],
+  approve: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: Number,
     default: RequestStatus.Pending,

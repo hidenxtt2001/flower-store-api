@@ -11,7 +11,7 @@ router.use(authentication);
 
 router.get(
   "/",
-  permissionRole([RoleEnum.Warehouse, RoleEnum.Seller, RoleEnum.Supplier]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier]),
   controller.get_products
 );
 
@@ -24,7 +24,7 @@ router.post(
 
 router.get(
   "/:id",
-  permissionRole([RoleEnum.Warehouse, RoleEnum.Seller, RoleEnum.Supplier]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier]),
   controller.get_special_product
 );
 router.delete(

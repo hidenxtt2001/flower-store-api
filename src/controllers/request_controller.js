@@ -56,4 +56,15 @@ module.exports = {
       res.status(404).json(new ResponseHelper(true, (message = error.message)));
     }
   },
+  approve: async (req, res) => {
+    const { id } = req.params;
+    try {
+      await Request.findByIdAndUpdate(id, { approve: true });
+      res
+        .status(201)
+        .json(new ResponseHelper(false, (message = "Request Approve Success")));
+    } catch (error) {
+      res.status(404).json(new ResponseHelper(true, (message = error.message)));
+    }
+  },
 };
