@@ -5,10 +5,10 @@ const controller = require("../controllers/bill_controller");
 const permissionRole = require("../middleware/permission_role");
 const { RoleEnum } = require("../utils/enums");
 router.use(auth);
-router.get("/", permissionRole([RoleEnum.Warehouse]), controller.getBills);
+router.get("/", permissionRole([RoleEnum.Warehouse]), controller.get);
 router.post(
   "/",
   permissionRole([RoleEnum.Seller, RoleEnum.Warehouse]),
-  controller.createBill
+  controller.create
 );
 module.exports = router;

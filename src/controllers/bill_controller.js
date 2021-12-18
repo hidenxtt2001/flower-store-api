@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Bill = require("../models/bill");
 const ResponseHelper = require("../utils/response_helper");
+const Package = require("../models/package");
 module.exports = {
-  getBills: async (req, res) => {
+  get: async (req, res) => {
     try {
       const bills = await Bill.find().populate({
         path: "staff",
@@ -19,7 +20,7 @@ module.exports = {
         .json(new ResponseHelper(true, (message = error.message)));
     }
   },
-  createBill: async (req, res) => {
+  create: async (req, res) => {
     const { details, customer, totalPrice } = req.body;
     const staff = req.staff;
     if (
@@ -30,6 +31,7 @@ module.exports = {
       return res
         .status(404)
         .json(new ResponseHelper(true, (message = "Data is invalid")));
+
     try {
       const bill = new Bill({
         staff: staff._id,
@@ -38,6 +40,18 @@ module.exports = {
         totalPrice: totalPrice,
       });
       const result = await bill.save();
+
+      for (index in details) {
+        let detail = details[index];
+        let package = await Package.findOne({
+          "product._id": detail.product._id,
+        });
+        if (package) {
+          package.quantity -= detail.quantity;
+          await package.save();
+        }
+      }
+
       res
         .status(201)
         .json(
