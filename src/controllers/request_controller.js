@@ -7,7 +7,7 @@ module.exports = {
     try {
       const requests = await Request.find().populate({
         path: "staff",
-        select: ["name", "url"],  
+        select: ["name", "url"],
       });
       const response = new ResponseHelper(false, "Get Requests", requests);
       res.status(200).json(response);
@@ -40,17 +40,17 @@ module.exports = {
   updateStatus: async (req, res) => {
     const { status } = req.body;
     const { id } = req.params;
-    console.log(RequestStatus[status]);
+    if (!Object.values(RequestStatus).includes(status)) {
+      return res
+        .status(404)
+        .json(new ResponseHelper(true, (message = "Status not defind")));
+    }
     try {
-      const result = Request.findByIdAndUpdate(id, { status: status });
+      await Request.findByIdAndUpdate(id, { status: status });
       res
         .status(201)
         .json(
-          new ResponseHelper(
-            false,
-            (message = "Request Update Status Success"),
-            result
-          )
+          new ResponseHelper(false, (message = "Request Update Status Success"))
         );
     } catch (error) {
       res.status(404).json(new ResponseHelper(true, (message = error.message)));

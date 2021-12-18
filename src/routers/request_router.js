@@ -16,7 +16,7 @@ router.post(
   controller.create
 );
 router.patch(
-  "/:id",
+  "/:id/status",
   permissionRole([RoleEnum.Warehouse]),
   controller.updateStatus
 );
