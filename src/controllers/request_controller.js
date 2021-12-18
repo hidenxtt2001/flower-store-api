@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Request = require("../models/request");
+const Package = require("../models/package");
 const ResponseHelper = require("../utils/response_helper");
 const { RequestStatus } = require("../utils/enums");
 module.exports = {
@@ -46,7 +47,40 @@ module.exports = {
         .json(new ResponseHelper(true, (message = "Status not defind")));
     }
     try {
-      await Request.findByIdAndUpdate(id, { status: status });
+      const request = await Request.findById(id);
+      if (!request)
+        return res
+          .status(404)
+          .json(new ResponseHelper(true, (message = "Request not found")));
+      if (request.status !== RequestStatus.Pending) {
+        return res
+          .status(400)
+          .json(new ResponseHelper(false, (message = "Already status")));
+      }
+      request.status = status;
+
+      // Add Product to package
+      if (status === RequestStatus.Done) {
+        for (index in request.details) {
+          let detail = request.details[index];
+          let package = await Package.findOne({
+            "product._id": detail.product._id,
+          });
+          if (package) {
+            package.quantity += detail.quantity;
+            await package.save();
+          } else {
+            package = new Package({
+              product: detail.product,
+              quantity: detail.quantity,
+            });
+            await package.save();
+          }
+        }
+      }
+
+      await request.save();
+
       res
         .status(201)
         .json(

@@ -13,7 +13,7 @@ router.get(
 );
 router.post("/", permissionRole([RoleEnum.Warehouse]), controller.create);
 
-router.path(
+router.patch(
   "/:id/approve",
   permissionRole([RoleEnum.Supplier]),
   controller.approve
