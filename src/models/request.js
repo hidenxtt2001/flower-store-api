@@ -16,31 +16,34 @@ const requestDetailSchema = mongoose.Schema({
   },
 });
 
-const requestSchema = mongoose.Schema({
-  staff: {
-    type: mongoose.Types.ObjectId,
-    ref: "Staff",
-    required: true,
-  },
-  details: [
-    {
-      type: requestDetailSchema,
+const requestSchema = mongoose.Schema(
+  {
+    staff: {
+      type: mongoose.Types.ObjectId,
+      ref: "Staff",
       required: true,
     },
-  ],
-  approve: {
-    type: Boolean,
-    default: false,
+    details: [
+      {
+        type: requestDetailSchema,
+        required: true,
+      },
+    ],
+    approve: {
+      type: Boolean,
+      default: false,
+    },
+    status: {
+      type: Number,
+      default: RequestStatus.Pending,
+    },
+    totalPrice: {
+      type: Number,
+      default: 0.0,
+    },
   },
-  status: {
-    type: Number,
-    default: RequestStatus.Pending,
-  },
-  totalPrice: {
-    type: Number,
-    default: 0.0,
-  },
-});
+  { timestamps: true }
+);
 
 const Request = mongoose.model("Request", requestSchema);
 

@@ -30,27 +30,30 @@ const customerSchema = mongoose.Schema({
   },
 });
 
-const billSchema = mongoose.Schema({
-  staff: {
-    type: mongoose.Types.ObjectId,
-    ref: "Staff",
-    required: true,
-  },
-  details: [
-    {
-      type: billDetailSchema,
+const billSchema = mongoose.Schema(
+  {
+    staff: {
+      type: mongoose.Types.ObjectId,
+      ref: "Staff",
       required: true,
     },
-  ],
-  customer: {
-    type: customerSchema,
-    required: true,
+    details: [
+      {
+        type: billDetailSchema,
+        required: true,
+      },
+    ],
+    customer: {
+      type: customerSchema,
+      required: true,
+    },
+    totalPrice: {
+      type: Number,
+      default: 0.0,
+    },
   },
-  totalPrice: {
-    type: Number,
-    default: 0.0,
-  },
-});
+  { timestamps: true }
+);
 
 const Bill = mongoose.model("Bill", billSchema);
 
