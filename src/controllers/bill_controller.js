@@ -40,7 +40,7 @@ module.exports = {
         totalPrice: totalPrice,
       });
       const result = await bill.save();
-
+      let listPackage = [];
       for (index in details) {
         let detail = details[index];
         let package = await Package.findOne({
@@ -48,7 +48,27 @@ module.exports = {
         });
         if (package) {
           package.quantity -= detail.quantity;
+          listPackage.push(package);
+        } else {
+          return res
+            .status(404)
+            .json(new ResponseHelper(true, (message = "Data is invalid")));
+        }
+      }
+
+      for (index in listPackage) {
+        let package = listPackage[index];
+        if (package.quantity >= 0) {
           await package.save();
+        } else {
+          return res
+            .status(404)
+            .json(
+              new ResponseHelper(
+                true,
+                (message = "Package dont have enought quantity")
+              )
+            );
         }
       }
 
