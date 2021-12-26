@@ -61,6 +61,16 @@ module.exports = {
 
       // Add Product to package
       if (status === RequestStatus.Done) {
+        if (!request.approve) {
+          return res
+            .status(400)
+            .json(
+              new ResponseHelper(
+                false,
+                (message = "Request has not been approve")
+              )
+            );
+        }
         for (index in request.details) {
           let detail = request.details[index];
           let package = await Package.findOne({
