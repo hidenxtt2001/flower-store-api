@@ -8,7 +8,7 @@ router.use(auth);
 
 router.get(
   "/",
-  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier]),
+  permissionRole([RoleEnum.Warehouse, RoleEnum.Supplier, RoleEnum.Manager]),
   controller.get
 );
 router.post("/", permissionRole([RoleEnum.Warehouse]), controller.create);
