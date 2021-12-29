@@ -7,9 +7,6 @@ const MIME_TYPE_MAP = {
 };
 
 const upload = multer({
-  limits: {
-    fileSize: 1000000,
-  },
   fileFilter(req, file, cb) {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error(`Invalid file type`);
