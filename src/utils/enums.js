@@ -1,8 +1,7 @@
 const RoleEnum = {
-  Supplier: 4,
-  Manager: 3,
-  Seller: 2,
-  Accountant: 1,
+  Supplier: 3,
+  Manager: 2,
+  Seller: 1,
   Warehouse: 0,
 };
 
