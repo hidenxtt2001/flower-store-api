@@ -7,7 +7,7 @@ const { RoleEnum } = require("../utils/enums");
 router.use(auth);
 router.get(
   "/",
-  permissionRole([RoleEnum.Seller, RoleEnum.Warehouse]),
+  permissionRole([RoleEnum.Seller, RoleEnum.Warehouse, RoleEnum.Manager]),
   controller.get
 );
 
