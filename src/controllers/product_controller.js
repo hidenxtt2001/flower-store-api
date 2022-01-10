@@ -63,7 +63,11 @@ module.exports = {
   update_product: async (req, res) => {
     const { id } = req.params;
     const match = req.body;
-    if (!!req.file) match.image = req.file.path;
+    if (req.file) {
+      const buffer = await sharp(req.file.buffer).png().toBuffer();
+      const image = await new Image({ data: buffer }).save();
+      match.image = `${Constant.imageDirection}/${image._id}`;
+    }
     try {
       const product = await Product.findByIdAndUpdate(id, match, {
         upsert: true,
